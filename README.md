@@ -9,6 +9,8 @@ Une API RESTful pour la gestion d'événements avec authentification JWT, envoi 
 - 📅 CRUD complet sur les événements (`/events`)
 - 🌍 Intégration Nominatim API (géolocalisation des lieux)
 - 📩 Envoi de mails de confirmation (Mailtrap SMTP)
+- 🔄 CORS ouvert pour le client
+- 🗃️ Cache mémoire sur les routes GET
 - 🧩 Structure modulaire (models, schemas, services, crud)
 - 🛡️ Sécurité par dépendance (`Depends`, JWT)
 - 🗄️ PostgreSQL (NeonDB)
