@@ -28,14 +28,18 @@ async def create_event(event: EventCreate, db: Session = Depends(get_db), curren
 @router.put("/{event_id}", response_model=EventOut)
 def update_event(event_id: int, updated_event: EventUpdate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     existing = crud_event.get_event(db, event_id)
-    if not existing or existing.owner_id != current_user.id:
+    if not existing:
+        raise HTTPException(status_code=404, detail="Event not found")
+    if existing.owner_id != current_user.id:
         raise HTTPException(status_code=403, detail="Not allowed to update this event")
     return crud_event.update_event(db, event_id, updated_event)
 
 @router.delete("/{event_id}")
 def delete_event(event_id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     existing = crud_event.get_event(db, event_id)
-    if not existing or existing.owner_id != current_user.id:
+    if not existing:
+        raise HTTPException(status_code=404, detail="Event not found")
+    if existing.owner_id != current_user.id:
         raise HTTPException(status_code=403, detail="Not allowed to delete this event")
     crud_event.delete_event(db, event_id)
     return {"message": "Event deleted"}
